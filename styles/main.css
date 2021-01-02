@@ -1,0 +1,82 @@
+/* ============================ Global ============================ */
+
+* {
+    padding: 0rem;
+    margin: 0rem;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: poppins;
+    src: url(../fonts/poppins/Poppins-Regular.ttf)
+}
+
+body {
+    font-family: poppins;
+}
+
+img {
+    height: 1.5rem;
+    pointer-events: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ============================== Main Section ============================ */
+
+.colors {
+    display: flex;
+}
+
+.colors > div {
+    flex: 1 1 0rem;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.color:nth-child(1) {
+    background: rgb(195, 0, 255);
+}
+
+.color:nth-child(2) {
+    background: rgb(0, 255, 200);
+}
+
+.color:nth-child(3) {
+    background: rgb(255, 0, 234);
+}
+
+.color:nth-child(4) {
+    background: rgb(0, 162, 255);
+}
+
+.color:nth-child(5) {
+    background: rgb(255, 251, 0);
+}
+
+.colors button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.controllers {
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.controllers button {
+    background: rgb(0, 119, 255);
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    border: none;
+    outline: none;
+}
