@@ -5,6 +5,8 @@ let unlockedColorDivs = document.getElementsByClassName("unlocked");
 let lockBtn = document.querySelectorAll(".lockBtn");
 let lockBtnImg = document.querySelector(".lockBtn img");
 let clipBoardMsg = document.querySelector(".clipboardMsg");
+let adjustBtn = document.querySelectorAll(".adjustBtn");
+let adjustInput = document.querySelectorAll(".adjust input");
 
 // Function, obj and classes
 let colorPalette = {
@@ -37,9 +39,41 @@ let colorPalette = {
     clipBoardMsg.children[0].classList.add("active");
     clipBoardMsg.classList.add("active");
     clipBoardMsg.children[0].addEventListener("transitionend", () => {
-        clipBoardMsg.children[0].classList.remove("active");
-        clipBoardMsg.classList.remove("active");
+      clipBoardMsg.children[0].classList.remove("active");
+      clipBoardMsg.classList.remove("active");
     });
+  },
+  openAdjustPanel() {
+    let adjust = this.parentElement.querySelector(".adjust");
+    adjust.classList.toggle("active");
+  },
+
+  adjust() {
+    let parentDiv = this.parentElement.parentElement;
+    let parentElementBackgroundInHsl = chroma(
+      this.parentElement.parentElement.style.backgroundColor
+    ).hsl();
+    parentElementBackgroundInHsl[1] = parentElementBackgroundInHsl[1] * 100;
+    parentElementBackgroundInHsl[2] = parentElementBackgroundInHsl[2] * 100;
+    if (this.classList[0] == "hueInput") {
+      this.parentElement.querySelector(".hueValue").innerText = this.value;
+      parentElementBackgroundInHsl[0] = this.value;
+      parentDiv.style.backgroundColor = `hsl(${parentElementBackgroundInHsl[0]}, ${parentElementBackgroundInHsl[1]}%, ${parentElementBackgroundInHsl[2]}%`;
+    }
+    if (this.classList[0] == "lightnessInput") {
+      this.parentElement.querySelector(
+        ".lightnessValue"
+      ).innerText = this.value;
+      parentElementBackgroundInHsl[2] = this.value;
+      parentDiv.style.backgroundColor = `hsl(${parentElementBackgroundInHsl[0]}, ${parentElementBackgroundInHsl[1]}%, ${parentElementBackgroundInHsl[2]}%`;
+    }
+    if (this.classList[0] == "saturationInput") {
+      this.parentElement.querySelector(
+        ".saturationValue"
+      ).innerText = this.value;
+      parentElementBackgroundInHsl[1] = this.value;
+      parentDiv.style.backgroundColor = `hsl(${parentElementBackgroundInHsl[0]}, ${parentElementBackgroundInHsl[1]}%, ${parentElementBackgroundInHsl[2]}%`;
+    }
   },
 };
 
@@ -56,6 +90,14 @@ colorHeads.forEach((head) => {
   head.addEventListener("click", () => {
     colorPalette.copyToClipboard(head);
   });
+});
+
+adjustBtn.forEach((btn) => {
+  btn.addEventListener("click", colorPalette.openAdjustPanel);
+});
+
+adjustInput.forEach((input) => {
+  input.addEventListener("input", colorPalette.adjust);
 });
 
 // Button to be clicked automatically when the page reloads
