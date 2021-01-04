@@ -112,7 +112,6 @@ let colorPalette = {
     }
     let colorsString = JSON.stringify(colors);
     localStorage.setItem(inputValue, colorsString);
-    console.log(localStorage.getItem(inputValue));
     alert("Your palette has been saved.");
   },
 
@@ -124,14 +123,16 @@ let colorPalette = {
   closeLibraryPrompt() {
     library.classList.remove("active");
     library.children[0].classList.remove("active");
+    let libs = document.querySelectorAll(".lib");
+    libs.forEach(lib => {
+      lib.remove();
+    })
   },
 
   displayLibraryColors() {
-    console.log(colorDivs);
     for (let a = 0; a < colorDivs.length; a++) {
-      console.log(colorDivs[a].style.backgroundColor = JSON.parse(localStorage.getItem(this.innerText))[a]);
+      colorDivs[a].style.backgroundColor = JSON.parse(localStorage.getItem(this.innerText))[a];
     }
-    console.log(JSON.parse(localStorage.getItem(this.innerText)));
     colorPalette.closeLibraryPrompt();
 
   },
@@ -141,7 +142,6 @@ let colorPalette = {
       let newLib = document.createElement("div");
       newLib.classList.add("lib");
       newLib.innerText = Object.keys(localStorage)[a];
-      console.log(Object.keys(localStorage)[a]);
       libraryContainer.appendChild(newLib);
       newLib.addEventListener("click", this.displayLibraryColors);
     }
