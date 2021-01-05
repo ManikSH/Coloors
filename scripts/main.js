@@ -28,6 +28,34 @@ let colorPalette = {
         colorsDivChild.innerText = randomColor;
       }
     }
+    this.autoCompleteAdjust();
+  },
+
+  autoCompleteAdjust() {
+    let aryOfColors = chroma(colorDivs[0].style.backgroundColor).hsl();
+    adjustInput[0].value = aryOfColors[0];
+    adjustInput[1].value = aryOfColors[2] * 100;
+    adjustInput[2].value = aryOfColors[1] * 100;
+
+    aryOfColors = chroma(colorDivs[1].style.backgroundColor).hsl();
+    adjustInput[3].value = aryOfColors[0];
+    adjustInput[4].value = aryOfColors[2] * 100;
+    adjustInput[5].value = aryOfColors[1] * 100;
+
+    aryOfColors = chroma(colorDivs[2].style.backgroundColor).hsl();
+    adjustInput[6].value = aryOfColors[0];
+    adjustInput[7].value = aryOfColors[2] * 100;
+    adjustInput[8].value = aryOfColors[1] * 100;
+
+    aryOfColors = chroma(colorDivs[3].style.backgroundColor).hsl();
+    adjustInput[9].value = aryOfColors[0];
+    adjustInput[10].value = aryOfColors[2] * 100;
+    adjustInput[11].value = aryOfColors[1] * 100;
+
+    aryOfColors = chroma(colorDivs[4].style.backgroundColor).hsl();
+    adjustInput[12].value = aryOfColors[0];
+    adjustInput[13].value = aryOfColors[2] * 100;
+    adjustInput[14].value = aryOfColors[1] * 100;
   },
 
   checkContrast() {
@@ -94,6 +122,8 @@ let colorPalette = {
   },
 
   savePalettePrompt() {
+    let inputValue = document.querySelector(".save input");
+    inputValue.value = "";
     savePalettePrompt.classList.add("active");
     savePalettePrompt.children[0].classList.add("active");
   },
@@ -124,17 +154,18 @@ let colorPalette = {
     library.classList.remove("active");
     library.children[0].classList.remove("active");
     let libs = document.querySelectorAll(".lib");
-    libs.forEach(lib => {
+    libs.forEach((lib) => {
       lib.remove();
-    })
+    });
   },
 
   displayLibraryColors() {
     for (let a = 0; a < colorDivs.length; a++) {
-      colorDivs[a].style.backgroundColor = JSON.parse(localStorage.getItem(this.innerText))[a];
+      colorDivs[a].style.backgroundColor = JSON.parse(
+        localStorage.getItem(this.innerText)
+      )[a];
     }
     colorPalette.closeLibraryPrompt();
-
   },
 
   fetchLibrary() {
@@ -144,6 +175,8 @@ let colorPalette = {
       newLib.innerText = Object.keys(localStorage)[a];
       libraryContainer.appendChild(newLib);
       newLib.addEventListener("click", this.displayLibraryColors);
+      newLib.addEventListener("click", this.checkContrast);
+      newLib.addEventListener("click", this.autoCompleteAdjust);
     }
   },
 };
